@@ -1,6 +1,6 @@
 DEPENDS = "gstreamer virtual/openmax-il"
 
-SRC_URI = "git://github.com/felipec/gst-openmax.git;protocol=git \
+SRC_URI = "git://github.com/roopar/gst-openmax.git;protocol=git \
 	file://common-20090128.tar.gz \
 	file://nogstcheck.patch;patch=1 \
 	file://colorformatdec.patch;patch=1"

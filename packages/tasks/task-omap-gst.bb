@@ -52,6 +52,7 @@ RDEPENDS_task-omap-gst-plugins = "\
     gst-plugin-freeze \
     gst-plugin-multifile \
     gst-plugin-gconfelements \
+    gst-openmax \
     "
 
 RDEPENDS_task-omap-gst-apps = ""
