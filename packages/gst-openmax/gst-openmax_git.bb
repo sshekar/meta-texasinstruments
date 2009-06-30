@@ -1,11 +1,11 @@
 DEPENDS = "gstreamer virtual/openmax-il"
 
-SRC_URI = "git://github.com/felipec/gst-openmax.git;protocol=git \
+SRC_URI = "git://github.com/roopar/gst-openmax.git;protocol=git \
 	file://common-20090128.tar.gz \
 	file://nogstcheck.patch;patch=1 \
 	file://colorformatdec.patch;patch=1"
 # From omap branch:
-SRCREV = "18fdb2371e1e893daa40af31da21026bb32a72f5"
+SRCREV = "87928514f42ffb1460f29881b21b75955044a87b"
 S = "${WORKDIR}/git"
 
 inherit autotools
