@@ -6,7 +6,7 @@ LICENSE = "LGPL"
 PR = "r0"
 
 SRCREV = "2d660725bdfddf00a9d20faf6f0493f4e48b84e7"
-SRC_URI = "git://github.com/roopar/gst-goo.git;protocol=http;branch=master"
+SRC_URI = "git://github.com/mrchapp/gst-goo.git;protocol=http;branch=master"
 SRC_URI += "file://camnothumb.patch;patch=1"
 S = "${WORKDIR}/git"
 
