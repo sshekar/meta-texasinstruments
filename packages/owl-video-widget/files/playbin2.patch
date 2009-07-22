@@ -1,0 +1,13 @@
+Index: libowl-av/libowl-av/owl-video-widget.c
+===================================================================
+--- libowl-av.orig/libowl-av/owl-video-widget.c	2009-07-22 15:11:27.000000000 -0500
++++ libowl-av/libowl-av/owl-video-widget.c	2009-07-22 15:11:42.000000000 -0500
+@@ -433,7 +433,7 @@
+          * playbin.
+          **/
+         video_widget->priv->playbin =
+-                gst_element_factory_make ("playbin", "playbin");
++                gst_element_factory_make ("playbin2", "playbin2");
+         if (!video_widget->priv->playbin) {
+                 g_warning ("No playbin found. Playback will not work.");
+ 
