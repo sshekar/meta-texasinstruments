@@ -1,0 +1,20 @@
+Index: scripts/poky-git-proxy-command
+===================================================================
+--- scripts/poky-git-proxy-command	(revision 5728)
++++ scripts/poky-git-proxy-command	(working copy)
+@@ -1,10 +1,5 @@
+-#! /bin/bash
++#!/bin/bash
+ 
+-(echo "CONNECT $1:$2 HTTP/1.0"; 
+- echo; 
+- cat ) | nc $GIT_PROXY_HOST $GIT_PROXY_PORT | 
+-  
+-(read a; 
+- read a; 
+- read a; 
+- cat )
+\ No newline at end of file
++(echo "CONNECT $1:$2 HTTP/1.0"; echo; cat ) | socket \
++$GIT_PROXY_HOST $GIT_PROXY_PORT | (read a; read a; cat)
++
