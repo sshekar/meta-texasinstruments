@@ -1,0 +1,12 @@
+Index: linux-tiomap-2.6.24.7-5.25-P1/drivers/media/video/omap/omap24xxvout.c
+===================================================================
+--- linux-tiomap-2.6.24.7-5.25-P1.orig/drivers/media/video/omap/omap24xxvout.c	2009-07-23 11:15:00.000000000 -0500
++++ linux-tiomap-2.6.24.7-5.25-P1/drivers/media/video/omap/omap24xxvout.c	2009-07-23 11:15:46.000000000 -0500
+@@ -1527,6 +1527,7 @@
+ 								phy_addr,virt_addr);
+ 			} else {
+ 				printk("REQBUFS: Failed to allocate video buffers !! \n");
++				count = i;
+ 				break;
+ 			}
+ 			if (!virt_addr)

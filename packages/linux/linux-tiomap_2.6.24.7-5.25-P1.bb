@@ -23,6 +23,9 @@ CCASE_PATHCOMPONENT = "2.6_kernel"
 #SRC_URI_omap-3430ldp += "file://defconfig-omap-3430ldp"
 #SRC_URI_omap-3430sdp += "file://defconfig-omap-3430sdp"
 
+# fix for REQBUFS bug in v4l2 display driver:
+SRC_URI += "file://omap24xxvout-reqbufs.patch;patch=1"
+
 # work-around for touchscreen problem (remove this when proper soln is found):
 #ADD_DISTRO_FEATURES += "sed -i 's/# CONFIG_INTERCONNECT_IO_POSTING is not set/CONFIG_INTERCONNECT_IO_POSTING=y/' ${S}/.config"
 
