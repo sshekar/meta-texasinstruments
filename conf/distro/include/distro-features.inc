@@ -12,10 +12,10 @@
 # The following are standard Poky DISTRO_FEATURES, not specific to
 # OMAP.  Do not touch these unless you know what you are doing.
 
-DISTRO_FEATURES += "alsa bluetooth ext2 irda pcmcia usbgadget usbhost wifi nfs zeroconf pci"
+DISTRO_FEATURES += "alsa ext2 irda pcmcia usbgadget usbhost wifi nfs zeroconf pci"
 
 # Below are OMAP-specific DISTRO_FEATURES.  Hack away!
 # This is a multimedia-based distribution. We can specify what
 # codecs to enable in this release.
 
-DISTRO_FEATURES += "camera jpegdec jpegenc gfx 720p tibluetooth tiwifi gps"
+DISTRO_FEATURES += "camera jpegdec jpegenc 720p"
