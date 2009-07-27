@@ -1,9 +1,14 @@
 DEPENDS = "tidspbridge-lib"
 DESCRIPTION = "Texas Instruments Common files for OpenMAX IL."
 PR = "r0"
-PACKAGES = "${PN}-dbg ${PN}-dev ${PN}"
+COMPONENT_PATH = "system/src/openmax_il/common"
 
+require tiopenmax-modular.inc
 require tiopenmax-cspec-${PV}.inc
+
+OMX_COMPILE_TARGET = "common"
+OMX_INSTALL_TARGET = "common.install"
+OMX_BUILD_DIR = ""
 
 CCASE_PATHFETCH = "\
 	/vobs/wtbu/OMAPSW_MPU/linux/system/src/openmax_il/common \
@@ -11,40 +16,8 @@ CCASE_PATHFETCH = "\
 	/vobs/wtbu/OMAPSW_MPU/linux/Makefile \
 	/vobs/wtbu/OMAPSW_MPU/linux/Master.mk \
 	"
-CCASE_PATHCOMPONENTS = 3
-CCASE_PATHCOMPONENT = "linux"
 
-inherit ccasefetch
-
-do_compile_prepend() {
-	install -d ${D}/usr/include
-}
-
-do_compile() {
-	oe_runmake \
-		PREFIX=${D}/usr PKGDIR=${S} \
-		CROSS=${AR%-*}- \
-		BRIDGEINCLUDEDIR=${STAGING_INCDIR}/dspbridge BRIDGELIBDIR=${STAGING_LIBDIR} \
-		TARGETDIR=${D}/usr OMXROOT=${S} \
-		common
-}
-
-do_install() {
-	oe_runmake \
-		PREFIX=${D}/usr PKGDIR=${S} \
-		CROSS=${AR%-*}- \
-		BRIDGEINCLUDEDIR=${STAGING_INCDIR}/dspbridge BRIDGELIBDIR=${STAGING_LIBDIR} \
-		TARGETDIR=${D}/usr OMXROOT=${S} \
-		common.install
-}
-
-do_stage() {
-	oe_runmake \
-		PREFIX=${STAGING_DIR_TARGET}/usr PKGDIR=${S} \
-		CROSS=${AR%-*}- \
-		BRIDGEINCLUDEDIR=${STAGING_INCDIR}/dspbridge BRIDGELIBDIR=${STAGING_LIBDIR} \
-		TARGETDIR=${STAGING_DIR_TARGET}/usr OMXROOT=${S} \
-		common.install
+do_stage_prepend() {
 	install -m 0644 ${S}/audio/src/openmax_il/aac_dec/inc/TIDspOmx.h ${STAGING_INCDIR}/omx
 }
 
@@ -55,5 +28,6 @@ do_stage() {
 PACKAGES = "${PN}"
 
 FILES_${PN} = "\
-	/usr/include \
-	"
+        /usr/include \
+        "
+
