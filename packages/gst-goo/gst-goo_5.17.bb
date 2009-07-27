@@ -9,8 +9,8 @@ SRCREV = "cd5dd2c3435a35735ccca65ec1abbe550c3fd27c"
 SRC_URI = "git://github.com/mrchapp/gst-goo.git;protocol=git"
 S = "${WORKDIR}/git"
 
-# reduce goosink_pp priority so as to not conflict with v4l2sink:
-SRC_URI += "file://reduce-goosinkpp-priority.patch;patch=1"
+# reduce goo element priority so as to not conflict with v4l2sink, alsasink, and gst-openmax elements:
+SRC_URI += "file://reduce-gooelement-priority.patch;patch=1"
 
 inherit autotools pkgconfig
 
