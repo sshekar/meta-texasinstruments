@@ -1,7 +1,16 @@
 Index: libowl-av/libowl-av/owl-video-widget.c
 ===================================================================
---- libowl-av.orig/libowl-av/owl-video-widget.c	2009-07-22 15:11:27.000000000 -0500
-+++ libowl-av/libowl-av/owl-video-widget.c	2009-07-22 15:11:42.000000000 -0500
+--- libowl-av.orig/libowl-av/owl-video-widget.c	2008-08-23 09:16:54.000000000 -0500
++++ libowl-av/libowl-av/owl-video-widget.c	2009-08-03 17:49:28.000000000 -0500
+@@ -330,7 +330,7 @@
+                                     &format,
+                                     &duration);
+ 
+-        if (format != GST_FORMAT_TIME)
++        if ((format != GST_FORMAT_TIME) || (duration == -1L))
+                 return;
+ 
+         video_widget->priv->duration = duration / GST_SECOND;
 @@ -433,7 +433,7 @@
           * playbin.
           **/
