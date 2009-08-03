@@ -3,7 +3,7 @@ PR = "r2"
  
 SRC_URI = "git://github.com/roopar/gst-openmax.git;protocol=git"
 # From omap branch:
-SRCREV = "dca357657f78e96d94311d5085a18ddec6f48ece"
+SRCREV = "3ef5da9d5b8617dde74c49610103baac56216a93"
 S = "${WORKDIR}/git"
  
 inherit autotools
