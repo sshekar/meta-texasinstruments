@@ -1,7 +1,7 @@
 Index: libowl-av/libowl-av/owl-video-widget.c
 ===================================================================
 --- libowl-av.orig/libowl-av/owl-video-widget.c	2008-08-23 09:16:54.000000000 -0500
-+++ libowl-av/libowl-av/owl-video-widget.c	2009-08-03 17:49:28.000000000 -0500
++++ libowl-av/libowl-av/owl-video-widget.c	2009-08-04 15:01:45.000000000 -0500
 @@ -330,7 +330,7 @@
                                      &format,
                                      &duration);
@@ -11,7 +11,7 @@ Index: libowl-av/libowl-av/owl-video-widget.c
                  return;
  
          video_widget->priv->duration = duration / GST_SECOND;
-@@ -433,7 +433,7 @@
+@@ -433,13 +433,18 @@
           * playbin.
           **/
          video_widget->priv->playbin =
@@ -20,3 +20,14 @@ Index: libowl-av/libowl-av/owl-video-widget.c
          if (!video_widget->priv->playbin) {
                  g_warning ("No playbin found. Playback will not work.");
  
+                 return;
+         }
+ 
++        g_object_set (G_OBJECT (video_widget->priv->playbin),
++                      "flags", 0x00000067,  /* native-audio | native-video | text | audio | video */
++                      NULL);
++
++
+         /**
+          * A videosink.
+          **/
