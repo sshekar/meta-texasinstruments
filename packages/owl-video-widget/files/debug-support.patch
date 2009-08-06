@@ -241,7 +241,7 @@ Index: libowl-av/libowl-av/owl-debug.c
 +			gint percent;
 +
 +			gst_message_parse_buffering (message, &percent);
-+			PRINT ("%s %d%%  \r", _("buffering..."), percent);
++			g_print ("%s %d%%  \r", _("buffering..."), percent);
 +			break;
 +		}
 +		default: {
