@@ -6,7 +6,7 @@ LICENSE = "LGPL"
 PR = "r0"
 
 SRCREV = "cd5dd2c3435a35735ccca65ec1abbe550c3fd27c"
-SRC_URI = "git://github.com/mrchapp/gst-goo.git;protocol=git"
+SRC_URI = "git://github.com/mrchapp/gst-goo.git;protocol=git;branch=experimental"
 S = "${WORKDIR}/git"
 
 # reduce goo element priority so as to not conflict with v4l2sink, alsasink, and gst-openmax elements:

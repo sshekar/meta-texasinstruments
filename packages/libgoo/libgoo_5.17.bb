@@ -5,7 +5,7 @@ LICENSE = "LGPL"
 PR = "r0${TTIF_PR}"
 
 SRCREV = "f6e97ba8e00252d9cde645dfd814245207513248"
-SRC_URI = "git://github.com/mrchapp/libgoo.git;protocol=git"
+SRC_URI = "git://github.com/mrchapp/libgoo.git;protocol=git;branch=experimental"
 SRC_URI += " ${@base_contains("DISTRO_FEATURES", "ttif", "file://ttif.patch;patch=1", "", d)} "
 S = "${WORKDIR}/git"
 
