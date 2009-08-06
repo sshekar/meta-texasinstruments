@@ -1,7 +1,7 @@
 DEPENDS = "gstreamer virtual/openmax-il"
 PR = "r2"
  
-SRC_URI = "git://github.com/roopar/gst-openmax.git;protocol=git"
+SRC_URI = "git://github.com/roopar/gst-openmax.git;protocol=git;branch=omap"
 # From omap branch:
 SRCREV = "678c9d7cc2315904bd68d6c362428df04111c04c"
 S = "${WORKDIR}/git"
