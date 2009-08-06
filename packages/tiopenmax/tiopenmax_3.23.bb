@@ -1,6 +1,6 @@
 DEPENDS = "tidspbridge-lib mm-isp ${TTIF_DEPENDS}"
 DESCRIPTION = "Texas Instruments OpenMAX IL."
-PR = "r0${TTIF_PR}"
+PR = "r1"
 PACKAGES = "${PN}-dbg ${PN}-dev ${PN}-patterns ${PN}"
 
 PROVIDES = "virtual/openmax-il"
