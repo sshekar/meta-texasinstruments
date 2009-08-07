@@ -18,4 +18,4 @@ FILES_${PN} += "${libdir}/gstreamer-0.10/libgstomx.so"
 FILES_${PN}-dev += "${libdir}/gstreamer-0.10/libgstomx.*a"
 FILES_${PN}-dbg += "${libdir}/gstreamer-0.10/.debug/"
        
-addtask patch2 after do_patch before do_compile
+addtask patch2 after do_patch before do_configure
