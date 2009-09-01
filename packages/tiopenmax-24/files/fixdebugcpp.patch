@@ -1,0 +1,27 @@
+From bfe6da6955b8cc90d08e367b05dad93ecd23aaef Mon Sep 17 00:00:00 2001
+From: abraham duenas <abraham.duenas@ti.com>
+Date: Mon, 31 Aug 2009 09:32:05 -0500
+Subject: [PATCH] fix debugging preprocessor directives
+
+use proper preprocessor directives while defining debug messages
+- #elif instead of #elseif
+---
+ audio/audio_decode/base/inc/omx_audiodecutils.h |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/audio/audio_decode/base/inc/omx_audiodecutils.h b/audio/audio_decode/base/inc/omx_audiodecutils.h
+index 24fe8ac..60daa07 100644
+--- a/audio/audio_decode/base/inc/omx_audiodecutils.h
++++ b/audio/audio_decode/base/inc/omx_audiodecutils.h
+@@ -31,7 +31,7 @@
+ #define AUDIODEC_DPRINT(...)  fprintf(stdout, "%s %d::  ",__FUNCTION__, __LINE__); \
+     fprintf(stdout, __VA_ARGS__);                                       \
+     fprintf(stdout, "\n");
+-#elseif OMX_LOG_OVER_TTIF
++#elif defined(OMX_LOG_OVER_TTIF)
+ #define AUDIODEC_DPRINT(...)  OMX_BASE_Trace(__VA_ARGS__);
+ #else
+ #define AUDIODEC_DPRINT(...)
+-- 
+1.6.3.1
+
