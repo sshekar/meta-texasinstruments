@@ -11,4 +11,5 @@ PREFERRED_VERSION_tiopenmax-common =            "23.5.0.10"
 PREFERRED_VERSION_tiopenmax-rmproxy =           "23.5.0.10"
 PREFERRED_VERSION_tiopenmax-videodec =          "23.5.0.10"
 PREFERRED_VERSION_tiopenmax-videoenc =          "23.5.0.10"
+PREFERRED_VERSION_tiopenmax-stubcamera = 	"24.0.11"
 
