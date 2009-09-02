@@ -1,10 +1,10 @@
-DEPENDS = "tidspbridge-lib tiopenmax-common"
-DESCRIPTION = "Texas Instruments OpenMAX IL Operating System Abstraction Layer (OSAL)."
+DEPENDS = "tiopenmax-osal tiopenmax-core"
+DESCRIPTION = "Texas Instruments OpenMAX IL (New) Base Component."
 PACKAGES = "${PN} ${PN}-dbg ${PN}-dev"
 PR = "r1"
 
 require tiopenmax-system-git.inc
-S = "${WORKDIR}/git/system/mm_osal/"
+S = "${WORKDIR}/git/system/omx_base/"
 
 inherit pkgconfig autotools
 
