@@ -1,0 +1,12 @@
+Index: audio_decode/tests/tiomxplayer.h
+===================================================================
+--- audio_decode.orig/tests/tiomxplayer.h	2009-09-01 15:11:24.000000000 -0500
++++ audio_decode/tests/tiomxplayer.h	2009-09-01 15:11:44.000000000 -0500
+@@ -12,6 +12,7 @@
+ 
+ #include <error.h>
+ #include <OMX_Core.h>
++#include <OMX_Component.h>
+ #include <unistd.h>
+ #include <getopt.h>
+ #include <alsa/asoundlib.h>

@@ -1,11 +1,12 @@
 DEPENDS = "tiopenmax-base tiopenmax-core tiopenmax-rmproxy tiopenmax-lcml"
 DESCRIPTION = "Texas Instruments OpenMAX IL Audio Decoder."
 PACKAGES = "${PN} ${PN}-dbg ${PN}-dev"
-PR = "r1"
+PR = "r2"
 
 require tiopenmax-audio-${PV}.inc
 S = "${WORKDIR}/git/audio/audio_decode/"
 SRC_URI += "file://fixdebugcpp.patch;patch=1;pnum=3"
+SRC_URI += "file://tiomxplayerutils-new-core.patch;patch=1"
 
 EXTRA_OECONF = "--enable-tests"
 
