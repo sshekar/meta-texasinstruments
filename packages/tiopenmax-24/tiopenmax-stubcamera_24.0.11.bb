@@ -4,7 +4,7 @@ PACKAGES = "${PN} ${PN}-dbg ${PN}-dev"
 PR = "r1"
 
 SRC_URI = "git://sealion.sc.ti.com/git/camera-omx.git;protocol=git"
-SRCREV = "f9fb27ed5e757e22ae00653b5ce7b6af8c12bfe9"
+SRCREV = "c84688dedb4f083eb9f86f2a50cb6826dc673d17"
 S = "${WORKDIR}/git/video/camera/"
 
 EXTRA_OECONF = "--enable-tests"
