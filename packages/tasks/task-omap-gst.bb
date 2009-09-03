@@ -52,6 +52,7 @@ RDEPENDS_task-omap-gst-plugins = "\
     gst-plugin-aacparse \
     gst-plugin-decodebin2 \
     gst-plugin-flv \
+    gst-qa \
     gst-openmax \
     "
 
