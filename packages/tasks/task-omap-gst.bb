@@ -31,7 +31,6 @@ RDEPENDS_task-omap-gst-plugins = "\
     gst-plugins-good	\
     gst-plugins-bad	\
     gst-plugins-ugly	\
-    gst-omap3		\
     gst-plugin-mpegaudioparse \
     gst-plugin-audiotestsrc \
     gst-plugin-videotestsrc \

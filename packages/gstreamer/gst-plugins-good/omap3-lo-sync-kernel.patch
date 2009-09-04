@@ -1,0 +1,53 @@
+Index: git/sys/v4l2/gstv4l2sink.c
+===================================================================
+--- git.orig/sys/v4l2/gstv4l2sink.c	2009-09-05 15:35:22.000000000 -0500
++++ git/sys/v4l2/gstv4l2sink.c	2009-09-05 15:36:42.000000000 -0500
+@@ -621,14 +621,7 @@
+         return GST_FLOW_ERROR;
+       }
+ 
+-#ifdef OMAPZOOM
+-      if (!gst_v4l2_object_start_streaming (v4l2sink->v4l2object)) {
+-        return GST_FLOW_ERROR;
+-      }
+-      v4l2sink->state = STATE_STREAMING;
+-#else
+       v4l2sink->state = STATE_PENDING_STREAMON;
+-#endif
+ 
+       GST_INFO_OBJECT (v4l2sink, "outputting buffers via mmap()");
+ 
+@@ -692,14 +685,12 @@
+     return GST_FLOW_ERROR;
+   }
+ 
+-#ifndef OMAPZOOM
+   if (v4l2sink->state == STATE_PENDING_STREAMON) {
+     if (!gst_v4l2_object_start_streaming (v4l2sink->v4l2object)) {
+       return GST_FLOW_ERROR;
+     }
+     v4l2sink->state = STATE_STREAMING;
+   }
+-#endif
+ 
+   if (!newbuf) {
+     gst_buffer_ref (buf);
+Index: git/sys/v4l2/v4l2_calls.h
+===================================================================
+--- git.orig/sys/v4l2/v4l2_calls.h	2009-09-05 15:35:22.000000000 -0500
++++ git/sys/v4l2/v4l2_calls.h	2009-09-05 15:37:05.000000000 -0500
+@@ -168,14 +168,5 @@
+   } G_STMT_END
+ #endif
+ 
+-/* note: the omapzoom kernel v4l2 display driver deviates from the v4l2 API
+- * spec in a few areas.  For example, we must always have one buffer with
+- * the driver before STREAMON until after STREAMOFF.  And some interfaces,
+- * such as rotation (and mirroring?) are different.
+- *
+- * this is only a temporary hack, as we should switch to the new driver soon
+- */
+-#define OMAPZOOM
+-
+ 
+ #endif /* __V4L2_CALLS_H__ */

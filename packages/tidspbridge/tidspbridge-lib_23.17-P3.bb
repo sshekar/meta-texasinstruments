@@ -15,11 +15,14 @@ SRC_URI = " \
 	file://23.12-mkcross-api.patch;patch=1 \
 	"
 
+
 CCASE_SPEC = "%\
 	element * COMPONENT_ROOT%\
-	element /vobs/wtbu/OMAPSW_MPU/dspbridge/... L-BRIDGE-MPU_RLS_${PV}%\
+	element /vobs/wtbu/OMAPSW_MPU/dspbridge/... L-MPU-BRIDGE_INT_BL_23-072709%\
 	element * /main/LATEST%\
 	"
+#	element /vobs/wtbu/OMAPSW_MPU/dspbridge/... L-BRIDGE-MPU_RLS_${PV}%\
+
 CCASE_PATHFETCH = "/vobs/wtbu/OMAPSW_MPU/dspbridge"
 CCASE_PATHCOMPONENT = "dspbridge"
 CCASE_PATHCOMPONENTS = "3"

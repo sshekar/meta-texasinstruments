@@ -11,14 +11,7 @@ PREFERRED_VERSION_omap-image-minimal.bb =		"1.0"
 PREFERRED_VERSION_omap-image-mm.bb =			"1.0"
 PREFERRED_VERSION_omap-image-sato.bb =			"1.0
 
-# baseport
-PREFERRED_VERSION_x-load =		"4.62"
-PREFERRED_VERSION_u-boot =		"5.10"
-PREFERRED_VERSION_linux-tiomap =	"2.6.24.7-5.25-P1"
-
 # bridge and friends
-PREFERRED_VERSION_tidspbridge-module =		"23.17-P1"
-PREFERRED_VERSION_tidspbridge-lib =		"23.17-P1"
 PREFERRED_VERSION_tidspbridge-samples =		"4.54"
 PREFERRED_VERSION_tidspbridge-extra =		"23.13"
 PREFERRED_VERSION_tidspbridge-cgt6x =		"6.0.7"
