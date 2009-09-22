@@ -1,0 +1,13 @@
+Index: video_encode/inc/OMX_VideoEnc_Utils.h
+===================================================================
+--- video_encode.orig/inc/OMX_VideoEnc_Utils.h	2009-09-22 16:22:58.000000000 -0500
++++ video_encode/inc/OMX_VideoEnc_Utils.h	2009-09-22 16:23:30.000000000 -0500
+@@ -65,7 +65,7 @@
+     #include <oaf_debug.h>
+     #include <pthread.h>
+ #endif
+-#include "OMX_TI_Common.h"
++#include <common/OMX_TI_Common.h>
+ 
+ /* this is the max of VIDENC_MAX_NUM_OF_IN_BUFFERS and VIDENC_MAX_NUM_OF_OUT_BUFFERS */
+ #define VIDENC_MAX_NUM_OF_BUFFERS     5

@@ -5,6 +5,7 @@ PR = "r0"
 
 require tiopenmax-video-git.inc
 S = "${WORKDIR}/git/video/video_encode/"
+SRC_URI += "file://omx-fix-missing-symbol.patch;patch=1"
 
 EXTRA_OECONF = "--enable-tests"
 
