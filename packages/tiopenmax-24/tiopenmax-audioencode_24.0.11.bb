@@ -6,6 +6,7 @@ PR = "r0"
 require tiopenmax-audio-${PV}.inc
 S = "${WORKDIR}/git/audio/audio_encode/"
 SRC_URI += "file://tiomxrecorderutils-new-core.patch;patch=1"
+SRC_URI += "file://aacencuseomap3sn.patch;patch=1"
 
 EXTRA_OECONF = "--enable-tests"
 

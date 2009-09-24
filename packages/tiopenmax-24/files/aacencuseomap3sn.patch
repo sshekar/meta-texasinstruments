@@ -1,0 +1,27 @@
+diff --git a/aac_enc/src/omx_audioenc_aacutils.c~ b/aac_enc/src/omx_audioenc_aacutils.c
+index 3715ed2..7262458 100644
+--- a/aac_enc/src/omx_audioenc_aacutils.c~
++++ b/aac_enc/src/omx_audioenc_aacutils.c
+@@ -416,19 +416,19 @@ OMX_ERRORTYPE OMX_AUDIO_ENC_AAC_FillLCMLInitParams(OMX_HANDLETYPE hComponent,
+     plcml_Init->NodeInfo.AllUUIDs[0].uuid =
+                                      (struct DSP_UUID*)&MPEG4AACENC_SN_UUID;
+     strcpy((char*)plcml_Init->NodeInfo.AllUUIDs[0].DllName,
+-           "/lib/dsp/mpeg4aacenc_sn.dll64T");
++           "/lib/dsp/mpeg4aacenc_sn.dll64P");
+     plcml_Init->NodeInfo.AllUUIDs[0].eDllType = DLL_NODEOBJECT;
+ 
+     plcml_Init->NodeInfo.AllUUIDs[1].uuid =
+                                      (struct DSP_UUID*)&MPEG4AACENC_SN_UUID;
+     strcpy((char*)plcml_Init->NodeInfo.AllUUIDs[1].DllName,
+-           "/lib/dsp/mpeg4aacenc_sn.dll64T");
++           "/lib/dsp/mpeg4aacenc_sn.dll64P");
+     plcml_Init->NodeInfo.AllUUIDs[1].eDllType = DLL_DEPENDENT;
+ 
+ 
+     plcml_Init->NodeInfo.AllUUIDs[2].uuid = &ENCODE_COMMON_TI_UUID;
+     strcpy((char*)plcml_Init->NodeInfo.AllUUIDs[2].DllName,
+-           "/lib/dsp/usn.dll64T");
++           "/lib/dsp/usn.dll64P");
+      plcml_Init->NodeInfo.AllUUIDs[2].eDllType = DLL_DEPENDENT;
+ 
+     plcml_Init->DeviceInfo.TypeofDevice = 0;
