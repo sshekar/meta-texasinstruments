@@ -1,0 +1,39 @@
+Index: video_decode/inc/OMX_VideoDec_Utils.h
+===================================================================
+--- video_decode.orig/inc/OMX_VideoDec_Utils.h	2009-06-15 23:44:44.000000000 -0500
++++ video_decode/inc/OMX_VideoDec_Utils.h	2009-07-27 08:04:04.000000000 -0500
+@@ -1045,6 +1045,8 @@
+     #define VIDDEC_ERROR_DEBUG
+ #endif
+ 
++#define OMX_LOG_OVER_TTIF    /* TODO don't hard code this */
++
+ #ifdef UNDER_CE
+     #include <oaf_debug.h>
+     #ifndef VIDDEC_DPRINT
+@@ -1072,6 +1074,25 @@
+         #define VIDDEC_VERSIONPRINT
+     #endif
+ 
++#elif defined(OMX_LOG_OVER_TTIF)
++#  include <ttif_trace.h>
++   static TTIF_TRACE_ID __get_trace_id(void) {
++      static TTIF_TRACE_ID trace_id = TTIF_TRACE_INVALID_ID;
++      if( trace_id == TTIF_TRACE_INVALID_ID ) {
++              trace_id = ttif_trace_open("VD_T");
++      }
++      return trace_id;
++   }
++#  define VIDDECODER_EPRINT(...)     do {                                     \
++          ttif_trace_fprintf(__get_trace_id(), 0xffffffff, __VA_ARGS__);      \
++          VIDDEC_eprint(__LINE__, __FUNCTION__, __VA_ARGS__);                 \
++     } while(0)
++#  define VIDDEC_EPRINT              VIDDECODER_EPRINT
++#  define VIDDEC_BUFFERPRINT(...)    ttif_trace_fprintf(__get_trace_id(), (1<<2), __VA_ARGS__)
++#  define VIDDEC_VERSIONPRINT(...)   ttif_trace_fprintf(__get_trace_id(), (1<<3), __VA_ARGS__)
++#  define VIDDECODER_DPRINT(...)     ttif_trace_fprintf(__get_trace_id(), (1<<4), __VA_ARGS__)
++#  define OMX_DPRINT                 VIDDECODER_DPRINT
++
+ #else /* Linux Only */
+     #ifdef  VIDDEC_ERROR_DEBUG
+        #define VIDDECODER_EPRINT(STR, ARG...) VIDDEC_eprint(__LINE__, __FUNCTION__, STR, ##ARG)
