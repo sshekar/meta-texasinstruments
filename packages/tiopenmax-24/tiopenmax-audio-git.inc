@@ -1,2 +1,2 @@
-SRC_URI = "git://sealion.sc.ti.com/git/audio-omx.git;protocol=http"
-SRCREV = "c956d2c622f97338fde058726de6f5e7176cca01"
+SRC_URI = "git://dev.omapzoom.org/pub/scm/abraham/audio-omx.git;protocol=git;branch=libtools"
+SRCREV = "e46c34bf17a053c34ba759d51840fb616eaa8458"
