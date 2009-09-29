@@ -1,0 +1,37 @@
+Index: omx_base/omx_base_utils.h
+===================================================================
+--- omx_base.orig/omx_base_utils.h	2009-09-29 17:21:37.000000000 -0500
++++ omx_base/omx_base_utils.h	2009-09-29 17:22:27.000000000 -0500
+@@ -43,8 +43,30 @@
+ /*----------         function prototypes      ------------------- */
+ /*----------         data declarations        ------------------- */
+ 
+-#define OMX_BASE_Error(ARGS) TIMM_OSAL_Error(ARGS)
+-#define OMX_BASE_Trace(ARGS) TIMM_OSAL_Trace(ARGS)
++#ifdef OMX_LOG_OVER_TTIF
++#  include <string.h>
++#  include <ttif_trace.h>
++static TTIF_TRACE_ID __get_trace_id( char *file ) {
++    static TTIF_TRACE_ID trace_id = TTIF_TRACE_INVALID_ID;
++    if( trace_id == TTIF_TRACE_INVALID_ID ) {
++        char *name = strrchr( file, '/');
++        if(!name) name = strrchr( file, '\\');
++        if(!name) name = file;
++        else      name++;
++        trace_id = ttif_trace_open(name);
++    }
++    return trace_id;
++}
++#  define OMX_BASE_Error(ARGS,...)   do {\
++     ttif_trace_fprintf(__get_trace_id(__FILE__), 0xffffffff, "ERROR: "ARGS,##__VA_ARGS__); \
++     TIMM_OSAL_TraceFunction("\nERROR:%s[%d]"ARGS"\n", __FILE__, __LINE__ ,##__VA_ARGS__); \
++   } while(0)
++#  define OMX_BASE_Trace(...)   ttif_trace_fprintf(__get_trace_id(__FILE__), 0x1, __VA_ARGS__)
++
++#else
++#  define OMX_BASE_Error(ARGS) TIMM_OSAL_Error(ARGS)
++#  define OMX_BASE_Trace(ARGS) TIMM_OSAL_Trace(ARGS)
++#endif
+ 
+ 
+ #define OMX_BASE_Malloc(_nSize_, _hHeap_) \

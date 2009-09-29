@@ -5,6 +5,7 @@ PR = "r0"
 
 require tiopenmax-audio-${PV}.inc
 S = "${WORKDIR}/git/system/omx_base/"
+SRC_URI += "file://basetracettif.patch;patch=1"
 
 inherit pkgconfig autotools
 
