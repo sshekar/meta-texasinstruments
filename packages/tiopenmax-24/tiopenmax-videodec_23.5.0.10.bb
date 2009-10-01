@@ -1,4 +1,4 @@
-DEPENDS = "tiopenmax-base tiopenmax-core tiopenmax-rmproxy tiopenmax-lcml"
+DEPENDS = "tiopenmax-base tiopenmax-core tiopenmax-rmproxy tiopenmax-lcml ${@base_contains("DISTRO_FEATURES", "ttif", "ttif", "", d)}"
 DESCRIPTION = "Texas Instruments OpenMAX IL Video Decoder."
 PACKAGES = "${PN} ${PN}-dbg ${PN}-dev"
 PR = "r0"

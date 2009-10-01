@@ -1,2 +1,2 @@
 SRC_URI = "git://sealion.sc.ti.com/git/video-omx.git;protocol=git"
-SRCREV = "7e6ea3f70ff1a6f78bf43014cd20ea9eed23fd00"
+SRCREV = "63e37c30f6239554a097b0361bde86014fc41b80"
