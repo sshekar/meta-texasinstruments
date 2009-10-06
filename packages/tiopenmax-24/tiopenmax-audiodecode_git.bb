@@ -1,11 +1,11 @@
 DEPENDS = "tiopenmax-base tiopenmax-core tiopenmax-rmproxy tiopenmax-lcml"
 DESCRIPTION = "Texas Instruments OpenMAX IL Audio Decoder."
 PACKAGES = "${PN} ${PN}-dbg ${PN}-dev"
-PR = "r0"
+PR = "r1"
 
 require tiopenmax-audio-${PV}.inc
 S = "${WORKDIR}/git/audio/audio_decode/"
-#SRC_URI += "file://aacdecuseomap3sn.patch;patch=1;pnum=3"
+SRC_URI += "file://omap4-2-omap3.patch;patch=1;pnum=3"
 
 EXTRA_OECONF = "--enable-tests"
 

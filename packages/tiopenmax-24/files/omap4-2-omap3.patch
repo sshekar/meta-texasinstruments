@@ -1,0 +1,172 @@
+diff --git a/audio/audio_decode/aac_dec/inc/omx_audiodec_aacutils.h b/audio/audio_decode/aac_dec/inc/omx_audiodec_aacutils.h
+index 67283e6..2ecb8a5 100644
+--- a/audio/audio_decode/aac_dec/inc/omx_audiodec_aacutils.h
++++ b/audio/audio_decode/aac_dec/inc/omx_audiodec_aacutils.h
+@@ -51,14 +51,14 @@
+  */
+ /* ======================================================================= */
+ 
+-#define AACDEC_DLL_NAME "/lib/dsp/mpeg4aacdec_sn.dll64T"
++#define AACDEC_DLL_NAME "/lib/dsp/mpeg4aacdec_sn.dll64P"
+ /* ======================================================================= */
+ /**
+  * @def    AACDEC_DLL_NAME   AAC Dec Decoder socket node DLL name
+  */
+ /* ======================================================================= */
+ 
+-#define AACDEC_USN_DLL_NAME "/lib/dsp/usn.dll64T"
++#define AACDEC_USN_DLL_NAME "/lib/dsp/usn.dll64P"
+ /* ======================================================================= */
+ /**
+  * @def    OMX_AACDEC_DEFAULT_SEGMENT    Default segment ID for the LCML
+@@ -154,13 +154,13 @@ typedef enum {
+ */
+ /* ==================================================================== */
+ typedef struct {
+-	OMX_U32    size;
+-	long	   lOutputFormat; /*To set interleaved/Block format*/
+-	long	   DownSampleSbr;
+-	long	   iEnablePS;
+-	long	   lSamplingRateIdx;
+-	long	   nProfile;
+-	long	   bRawFormat;
++        OMX_U32    size;
++        long       lOutputFormat; /*To set interleaved/Block format*/
++        long       DownSampleSbr;
++        long       iEnablePS;
++        long       lSamplingRateIdx;
++        long       bRawFormat;
++        long       dualMonoMode;
+ } MPEG4AACDEC_UALGParams;
+ 
+ /* ==================================================================== */
+@@ -169,7 +169,7 @@ typedef struct {
+ /* ==================================================================== */
+ typedef struct AACDECParams{
+     OMX_BOOL Framemode;/*flag to indiacate either frame mode or non frame mode*/
+-    OMX_U32 nProfile; /*indicates the profile*/
++    OMX_U32 dualMonoMode; /*indicates the profile*/
+     OMX_U32 parameteric_stereo;/*flag for Parametric_stereo*/
+     OMX_U32 SBR;/*flag for SBR*/
+     OMX_BOOL SendAfterEOS;/*flag used to initialize the SN after the EOS has been sent*/
+diff --git a/audio/audio_decode/aac_dec/src/omx_audiodec_aacutils.c b/audio/audio_decode/aac_dec/src/omx_audiodec_aacutils.c
+index d25663f..c34fefc 100644
+--- a/audio/audio_decode/aac_dec/src/omx_audiodec_aacutils.c
++++ b/audio/audio_decode/aac_dec/src/omx_audiodec_aacutils.c
+@@ -190,23 +190,23 @@ OMX_ERRORTYPE OMX_AAC_DEC_SetParameter ( OMX_HANDLETYPE hComponent,
+                 TIMM_OSAL_Memcpy(pComponentPrivate->codec_params.aacdecParams->aacParams, ComponentParameterStructure,sizeof(OMX_AUDIO_PARAM_AACPROFILETYPE));
+                 /*need to update the aacdecParms*/
+                 if (pComponentPrivate->codec_params.aacdecParams->aacParams->eAACProfile == OMX_AUDIO_AACObjectMain){
+-                    pComponentPrivate->codec_params.aacdecParams->nProfile = 0;
++                    pComponentPrivate->codec_params.aacdecParams->dualMonoMode = 0;
+                 } 
+                 else if (pComponentPrivate->codec_params.aacdecParams->aacParams->eAACProfile == OMX_AUDIO_AACObjectLC){
+-                    pComponentPrivate->codec_params.aacdecParams->nProfile = 1;
++                    pComponentPrivate->codec_params.aacdecParams->dualMonoMode = 0;
+                 } 
+                 else if (pComponentPrivate->codec_params.aacdecParams->aacParams->eAACProfile == OMX_AUDIO_AACObjectSSR){
+-                    pComponentPrivate->codec_params.aacdecParams->nProfile = 2;
++                    pComponentPrivate->codec_params.aacdecParams->dualMonoMode = 0;
+                 } 
+                 else if (pComponentPrivate->codec_params.aacdecParams->aacParams->eAACProfile == OMX_AUDIO_AACObjectLTP){
+-                    pComponentPrivate->codec_params.aacdecParams->nProfile = 3;
++                    pComponentPrivate->codec_params.aacdecParams->dualMonoMode = 0;
+                 } 
+                 else if (pComponentPrivate->codec_params.aacdecParams->aacParams->eAACProfile == OMX_AUDIO_AACObjectHE){
+-                    pComponentPrivate->codec_params.aacdecParams->nProfile = 1;
++                    pComponentPrivate->codec_params.aacdecParams->dualMonoMode = 0;
+                     pComponentPrivate->codec_params.aacdecParams->SBR = 1;
+                 } 
+                 else if (pComponentPrivate->codec_params.aacdecParams->aacParams->eAACProfile == OMX_AUDIO_AACObjectHE_PS){
+-                    pComponentPrivate->codec_params.aacdecParams->nProfile = 1;
++                    pComponentPrivate->codec_params.aacdecParams->dualMonoMode = 0;
+                     pComponentPrivate->codec_params.aacdecParams->parameteric_stereo = PARAMETRIC_STEREO_AACDEC;
+                 }
+             }else {
+@@ -346,7 +346,7 @@ OMX_ERRORTYPE OMX_AAC_DEC_SetConfig (OMX_HANDLETYPE hComponent,
+             AUDIODEC_DPRINT("\n entered in OMX_IndexParamAudioAac case\n");    
+             aac_params = (OMX_AUDIO_PARAM_AACPROFILETYPE*)pComponentConfigStructure;
+             if(aac_params->eAACProfile == OMX_AUDIO_AACObjectHE_PS){
+-                pComponentPrivate->codec_params.aacdecParams->AACDEC_UALGParam->nProfile = OMX_AUDIO_AACObjectHE_PS;
++              /*pComponentPrivate->codec_params.aacdecParams->AACDEC_UALGParam->dualMonoMode = OMX_AUDIO_AACObjectHE_PS;*/
+                 pComponentPrivate->codec_params.aacdecParams->AACDEC_UALGParam->iEnablePS =  1;
+                 pComponentPrivate->codec_params.aacdecParams->AACDEC_UALGParam->DownSampleSbr = 1;
+ 
+@@ -364,7 +364,7 @@ OMX_ERRORTYPE OMX_AAC_DEC_SetConfig (OMX_HANDLETYPE hComponent,
+                 }
+             }
+             if(aac_params->eAACProfile == OMX_AUDIO_AACObjectHE){
+-                pComponentPrivate->codec_params.aacdecParams->AACDEC_UALGParam->nProfile = OMX_AUDIO_AACObjectHE;
++              /*pComponentPrivate->codec_params.aacdecParams->AACDEC_UALGParam->dualMonoMode = OMX_AUDIO_AACObjectHE;*/
+                 pComponentPrivate->codec_params.aacdecParams->AACDEC_UALGParam->iEnablePS =  0;
+                 pComponentPrivate->codec_params.aacdecParams->AACDEC_UALGParam->DownSampleSbr = 1;
+ 
+@@ -385,23 +385,23 @@ OMX_ERRORTYPE OMX_AAC_DEC_SetConfig (OMX_HANDLETYPE hComponent,
+             TIMM_OSAL_Memcpy(pComponentPrivate->codec_params.aacdecParams->aacParams,pComponentConfigStructure, sizeof(OMX_AUDIO_PARAM_AACPROFILETYPE));
+             /*need to update the aacdecParams*/
+             if (pComponentPrivate->codec_params.aacdecParams->aacParams->eAACProfile == OMX_AUDIO_AACObjectMain){
+-                pComponentPrivate->codec_params.aacdecParams->nProfile = 0;
++                pComponentPrivate->codec_params.aacdecParams->dualMonoMode = 0;
+             } 
+             else if (pComponentPrivate->codec_params.aacdecParams->aacParams->eAACProfile == OMX_AUDIO_AACObjectLC){
+-                pComponentPrivate->codec_params.aacdecParams->nProfile = 1;
++                pComponentPrivate->codec_params.aacdecParams->dualMonoMode = 0;
+             } 
+             else if (pComponentPrivate->codec_params.aacdecParams->aacParams->eAACProfile == OMX_AUDIO_AACObjectSSR){
+-                pComponentPrivate->codec_params.aacdecParams->nProfile = 2;
++                pComponentPrivate->codec_params.aacdecParams->dualMonoMode = 0;
+             } 
+             else if (pComponentPrivate->codec_params.aacdecParams->aacParams->eAACProfile == OMX_AUDIO_AACObjectLTP){
+-                pComponentPrivate->codec_params.aacdecParams->nProfile = 3;
++                pComponentPrivate->codec_params.aacdecParams->dualMonoMode = 0;
+             } 
+             else if (pComponentPrivate->codec_params.aacdecParams->aacParams->eAACProfile == OMX_AUDIO_AACObjectHE){
+-                pComponentPrivate->codec_params.aacdecParams->nProfile = 1;
++                pComponentPrivate->codec_params.aacdecParams->dualMonoMode = 0;
+                 pComponentPrivate->codec_params.aacdecParams->SBR = 1;
+             } 
+             else if (pComponentPrivate->codec_params.aacdecParams->aacParams->eAACProfile == OMX_AUDIO_AACObjectHE_PS){
+-                pComponentPrivate->codec_params.aacdecParams->nProfile = 1;
++                pComponentPrivate->codec_params.aacdecParams->dualMonoMode = 0;
+                 pComponentPrivate->codec_params.aacdecParams->parameteric_stereo = PARAMETRIC_STEREO_AACDEC;
+             }
+             break;
+@@ -522,7 +522,7 @@ OMX_ERRORTYPE OMX_AAC_DEC_InitParams(OMX_HANDLETYPE hComponent)
+ 
+     pComponentPrivate->codec_params.aacdecParams->parameteric_stereo = 0;
+     pComponentPrivate->codec_params.aacdecParams->SBR = 0;
+-    pComponentPrivate->codec_params.aacdecParams->nProfile = OMX_AUDIO_AACObjectLC;/*default profile can be changed using set paramet*/
++    pComponentPrivate->codec_params.aacdecParams->dualMonoMode = 0;/*default profile can be changed using set paramet*/
+     pComponentPrivate->codec_params.aacdecParams->Framemode=0;
+     pComponentPrivate->codec_params.aacdecParams->SendAfterEOS = 0;
+     
+@@ -800,7 +800,7 @@ OMX_ERRORTYPE OMX_AAC_DEC_SN_InitParams(OMX_HANDLETYPE hComponent)
+         pComponentPrivate->codec_params.aacdecParams->AACDEC_UALGParam->lOutputFormat    = EAUDIO_BLOCK;
+     }
+ #endif
+-    pComponentPrivate->codec_params.aacdecParams->AACDEC_UALGParam->nProfile         = pComponentPrivate->codec_params.aacdecParams->nProfile;
++    pComponentPrivate->codec_params.aacdecParams->AACDEC_UALGParam->dualMonoMode         = pComponentPrivate->codec_params.aacdecParams->dualMonoMode;
+     pComponentPrivate->codec_params.aacdecParams->AACDEC_UALGParam->lSamplingRateIdx = _OMX_AACDEC_GetSampleRateIndexL(pComponentPrivate->codec_params.aacdecParams->aacParams->nSampleRate);
+     pComponentPrivate->codec_params.aacdecParams->AACDEC_UALGParam->bRawFormat       = 0;
+     if(pComponentPrivate->codec_params.aacdecParams->aacParams->eAACStreamFormat == OMX_AUDIO_AACStreamFormatRAW){
+diff --git a/audio/audio_decode/mp3_dec/inc/omx_audiodec_mp3utils.h b/audio/audio_decode/mp3_dec/inc/omx_audiodec_mp3utils.h
+index 9744079..6491014 100644
+--- a/audio/audio_decode/mp3_dec/inc/omx_audiodec_mp3utils.h
++++ b/audio/audio_decode/mp3_dec/inc/omx_audiodec_mp3utils.h
+@@ -51,14 +51,14 @@
+  */
+ /* ======================================================================= */
+ 
+-#define MP3DEC_DLL_NAME "/lib/dsp/mp3dec_sn.dll64T"
++#define MP3DEC_DLL_NAME "/lib/dsp/mp3dec_sn.dll64P"
+ /* ======================================================================= */
+ /**
+  * @def    MP3DEC_DLL_NAME   MP3 Dec Decoder socket node DLL name
+  */
+ /* ======================================================================= */
+ 
+-#define MP3DEC_USN_DLL_NAME "/lib/dsp/usn.dll64T"
++#define MP3DEC_USN_DLL_NAME "/lib/dsp/usn.dll64P"
+ /* ======================================================================= */
+ /**
+  * @def    OMX_MP3DEC_DEFAULT_SEGMENT    Default segment ID for the LCML
