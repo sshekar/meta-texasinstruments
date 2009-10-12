@@ -24,10 +24,12 @@ fi
 [ -f $BASEIMAGE ] || exit 0
 
 DRIVERS_PATH="/lib/modules/`uname -r`/kernel/drivers"
+DSPBRIDGE=""
 BRIDGE_DRIVER="$DRIVERS_PATH/dspbridge/bridgedriver.ko"
 
 # depending on kernel version, driver could be in a different location... arrgg!
 if ! [ -f $BRIDGE_DRIVER ]; then
+    DSPBRIDGE="/lib/modules/`uname -r`/kernel/arch/arm/mach-omap2/dspbridge.ko"
     BRIDGE_DRIVER="$DRIVERS_PATH/dsp/bridge/bridgedriver.ko"
 fi
 
@@ -36,8 +38,14 @@ start ()
 {
     cd /dspbridge
     echo -n "Loading up Bridge driver: "
-    /dspbridge/install_bridge $BRIDGE_DRIVER shm_size=0x500000 > /dev/null 2>&1
-    /dspbridge/cexec.out -T $BASEIMAGE > /dev/null 2>&1
+    if [ -n $DSPBRIDGE ]; then
+        insmod $DSPBRIDGE
+        insmod $BRIDGE_DRIVER shm_size=0x500000
+    else
+        /dspbridge/install_bridge $BRIDGE_DRIVER shm_size=0x500000
+    fi
+    echo "Loading $BASEIMAGE"
+    /dspbridge/cexec.out -T $BASEIMAGE
     [ $? -eq 0 ] || exit $?
     echo "OK"
     
@@ -61,7 +69,10 @@ stop ()
     echo "OK"
 
     echo -n "Unloading Bridge driver: "
-    rmmod bridgedriver > /dev/null 2>&1
+    rmmod bridgedriver
+    if [ -n $DSPBRIDGE ]; then
+        rmmod dspbridge
+    fi
     echo "OK"
 }
 
