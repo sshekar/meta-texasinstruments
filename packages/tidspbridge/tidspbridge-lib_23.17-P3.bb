@@ -2,8 +2,8 @@ SECTION = "libs"
 PRIORITY = "optional"
 DESCRIPTION = "Texas Instruments MPU/DSP Bridge libraries."
 LICENSE = "LGPL"
-PR = "r0"
-DEPENDS = "virtual/dspbridge-driver"
+PR = "r1"
+DEPENDS = "virtual/dspbridge-driver ${TTIF_DEPENDS}"
 
 inherit ccasefetch pkgconfig
 
@@ -14,6 +14,9 @@ FILES_${PN}-dev = "${includedir}/dspbridge"
 SRC_URI = " \
 	file://23.12-mkcross-api.patch;patch=1 \
 	"
+
+SRC_URI += "${@base_contains("DISTRO_FEATURES", "ttif", "file://ttif-dspbridge.patch;patch=1", "", d)}"
+
 
 
 CCASE_SPEC = "%\

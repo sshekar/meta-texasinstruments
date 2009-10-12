@@ -1,0 +1,148 @@
+Only in dspbridge-23.17-P3: .cproject
+Only in dspbridge-23.17-P3: .project
+Index: tidspbridge-lib-23.17-P3/mpu_api/inc/_dbdebug.h
+===================================================================
+--- tidspbridge-lib-23.17-P3.orig/mpu_api/inc/_dbdebug.h	2008-06-11 16:15:11.000000000 -0500
++++ tidspbridge-lib-23.17-P3/mpu_api/inc/_dbdebug.h	2009-10-01 14:55:00.000000000 -0500
+@@ -58,7 +58,20 @@
+ #define DSPAPI_DEBUG_LEVEL DSPAPI_ZONE_WARNING
+ #endif
+ 
++#if 0
+ #define DEBUGMSG(x,y) if(x >= DSPAPI_DEBUG_LEVEL) printf(y)
++#else
++#  include <ttif_trace.h>
++   static TTIF_TRACE_ID __get_trace_id(void) {
++      static TTIF_TRACE_ID trace_id = TTIF_TRACE_INVALID_ID;
++      if( trace_id == TTIF_TRACE_INVALID_ID ) {
++              trace_id = ttif_trace_open("dspbridge");
++      }
++      return trace_id;
++   }
++#  define DEBUGMSG(x,y...) ttif_trace_fprintf(__get_trace_id(), 1, ##y )
++
++#endif
+ 
+ #else				/* ifdef LINUX */
+ 
+Index: tidspbridge-lib-23.17-P3/mpu_api/make/build.mk
+===================================================================
+--- tidspbridge-lib-23.17-P3.orig/mpu_api/make/build.mk	2009-01-08 15:59:56.000000000 -0600
++++ tidspbridge-lib-23.17-P3/mpu_api/make/build.mk	2009-10-01 14:55:00.000000000 -0500
+@@ -144,9 +144,9 @@
+ #   ----------------------------------------------------------
+ 
+ MAPFILE := -Wl,-Map,$(TARGET).map
+-INCPATH := $(addprefix -I, . $(INCLUDES)) $(LINUXINCLUDE)
++INCPATH := $(addprefix -I, . $(INCLUDES)) $(LINUXINCLUDE) -I`dirname $(KRNLSRC)`/usr/include/ttif
+ LIBPATH := $(addprefix -L, $(LIBINCLUDES))
+-LIBFILE := $(addprefix -l, $(ST_LIBS) $(SH_LIBS)) $(LIB_OBJS)
++LIBFILE := $(addprefix -l, $(ST_LIBS) $(SH_LIBS)) $(LIB_OBJS) -lttif -lttifcfg
+ 
+ ifeq ($(TARGETTYPE),SH_LIB)
+ CFLAGS += -fpic
+Index: tidspbridge-lib-23.17-P3/mpu_api/src/qos/qosti.c
+===================================================================
+--- tidspbridge-lib-23.17-P3.orig/mpu_api/src/qos/qosti.c	2008-12-12 12:52:31.000000000 -0600
++++ tidspbridge-lib-23.17-P3/mpu_api/src/qos/qosti.c	2009-10-01 14:55:00.000000000 -0500
+@@ -44,6 +44,8 @@
+ #ifdef QOSDYN_LOAD
+ CHAR pszNodeDll[] = "/dspbridge/qosdyn_3430.dll64P";
+ #endif /* ifdef QOSDYN_LOAD */
++
++#if 0
+ /* This is a much better way than DEBUGMSG... */
+ void DbgMsg(DWORD dwZone, char *szFormat, ...)
+ {
+@@ -54,6 +56,19 @@
+ 		va_end(ap);
+ 	}
+ }
++#else
++#  include <ttif_trace.h>
++   static TTIF_TRACE_ID __get_trace_id2(void) {
++      static TTIF_TRACE_ID trace_id = TTIF_TRACE_INVALID_ID;
++      if( trace_id == TTIF_TRACE_INVALID_ID ) {
++              trace_id = ttif_trace_open("qosti");
++      }
++      return trace_id;
++   }
++#  define DbgMsg(x,y...) ttif_trace_fprintf(__get_trace_id2(), 1, ##y )
++#endif
++
++
+ /*  ============================================================================
+     func   MsgToDsp
+     desc   Send Message to DSP
+Index: tidspbridge-lib-23.17-P3/samples/mpu/inc/_dbdebug.h
+===================================================================
+--- tidspbridge-lib-23.17-P3.orig/samples/mpu/inc/_dbdebug.h	2008-03-05 05:04:24.000000000 -0600
++++ tidspbridge-lib-23.17-P3/samples/mpu/inc/_dbdebug.h	2009-10-01 14:55:00.000000000 -0500
+@@ -58,7 +58,20 @@
+ #define DSPAPI_DEBUG_LEVEL DSPAPI_ZONE_WARNING
+ #endif
+ 
++#if 0
+ #define DEBUGMSG(x,y) if(x >= DSPAPI_DEBUG_LEVEL) printf(y)
++#else
++#  include <ttif_trace.h>
++   static TTIF_TRACE_ID __get_trace_id(void) {
++      static TTIF_TRACE_ID trace_id = TTIF_TRACE_INVALID_ID;
++      if( trace_id == TTIF_TRACE_INVALID_ID ) {
++              trace_id = ttif_trace_open("dspbridge");
++      }
++      return trace_id;
++   }
++#  define DEBUGMSG(x,y) ttif_trace_fprintf(__get_trace_id(), 1, (y))
++
++#endif
+ 
+ #else				/* ifdef LINUX */
+ 
+Index: tidspbridge-lib-23.17-P3/mpu_api/src/bridge/DSPManager.c
+===================================================================
+--- tidspbridge-lib-23.17-P3.orig/mpu_api/src/bridge/DSPManager.c	2008-09-04 11:07:25.000000000 -0500
++++ tidspbridge-lib-23.17-P3/mpu_api/src/bridge/DSPManager.c	2009-10-01 14:55:00.000000000 -0500
+@@ -91,6 +91,10 @@
+ {
+ 	int status = 0;
+ 
++	DEBUGMSG(DSPAPI_ZONE_FUNCTION,
++		 (TEXT("MGR: DSPManager_Open\r\n")));
++	sleep(1);
++
+ 	if (!bridge_sem_initialized) {
+ 		if (sem_init(&semOpenClose, 0, 1) == -1) {
+ 			DEBUGMSG(DSPAPI_ZONE_ERROR,
+Index: tidspbridge-lib-23.17-P3/mpu_api/src/bridge/DSPNode.c
+===================================================================
+--- tidspbridge-lib-23.17-P3.orig/mpu_api/src/bridge/DSPNode.c	2008-10-08 16:20:57.000000000 -0500
++++ tidspbridge-lib-23.17-P3/mpu_api/src/bridge/DSPNode.c	2009-10-01 14:55:00.000000000 -0500
+@@ -927,6 +927,7 @@
+ 
+ 	DEBUGMSG(DSPAPI_ZONE_FUNCTION,
+ 				(TEXT("NODE:DSPNode_GetUUIDProps:\r\n")));
++	DEBUGMSG(DSPAPI_ZONE_FUNCTION, "hProcessor=%d, pNodeID=%p\r\n", hProcessor, pNodeID);
+ 
+ 	if (hProcessor) {
+ 		if ((pNodeID) && (pNodeProps)) {
+@@ -940,6 +941,7 @@
+ 					(struct DSP_NDBPROPS *) pNodeProps;
+ 			status = DSPTRAP_Trap(&tempStruct,
+ 				CMD_NODE_GETUUIDPROPS_OFFSET);
++			DEBUGMSG(DSPAPI_ZONE_FUNCTION, "status=%08x\r\n", status);
+ 		} else {
+ 			/* Invalid parameter */
+ 			status = DSP_EPOINTER;
+Index: tidspbridge-lib-23.17-P3/mpu_api/src/bridge/dsptrap.c
+===================================================================
+--- tidspbridge-lib-23.17-P3.orig/mpu_api/src/bridge/dsptrap.c	2009-10-01 14:55:31.000000000 -0500
++++ tidspbridge-lib-23.17-P3/mpu_api/src/bridge/dsptrap.c	2009-10-01 14:55:44.000000000 -0500
+@@ -59,5 +59,7 @@
+ 	else
+ 		DEBUGMSG(DSPAPI_ZONE_FUNCTION, "Invalid handle to driver\n");
+ 
++	DEBUGMSG(DSPAPI_ZONE_FUNCTION, "cmd=%d, result=%08x", cmd, dwResult);
++
+ 	return dwResult;
+ }
