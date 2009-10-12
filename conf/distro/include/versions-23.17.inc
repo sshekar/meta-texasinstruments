@@ -12,7 +12,7 @@ PREFERRED_VERSION_omap-image-mm.bb =			"1.0"
 PREFERRED_VERSION_omap-image-sato.bb =			"1.0
 
 # bridge and friends
-PREFERRED_VERSION_tidspbridge-samples =		"4.54"
+PREFERRED_VERSION_tidspbridge-samples =		"23.17-P3"
 PREFERRED_VERSION_tidspbridge-extra =		"23.13"
 PREFERRED_VERSION_tidspbridge-cgt6x =		"6.0.7"
 PREFERRED_VERSION_tidspbridge-bios =		"5.33.02"
