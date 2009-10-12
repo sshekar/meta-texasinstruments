@@ -3,7 +3,7 @@
 # baseport
 PREFERRED_VERSION_x-load =             "4.62"
 PREFERRED_VERSION_u-boot =             "5.10"
-SRCREV_pn-linux-tiomap ?= "f1cc27d4e30cc7e33dfb50b52dbe1e844218c4dc"
+SRCREV_pn-linux-tiomap ?= "02b2ce47a93e32f3b4e26662d78a0f31a6ac37ab"
 
 # bridge and friends
 PREFERRED_VERSION_tidspbridge-lib =    "23.17-P3"
