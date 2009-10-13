@@ -25,5 +25,18 @@ PROVIDES += "virtual/dspbridge-driver"
 # work-around for touchscreen problem (remove this when proper soln is found):
 #ADD_DISTRO_FEATURES += "sed -i 's/# CONFIG_INTERCONNECT_IO_POSTING is not set/CONFIG_INTERCONNECT_IO_POSTING=y/' ${S}/.config"
 
+do_stage2() {
+	for ii in arch/arm/plat-omap/include/dspbridge \
+		  arch/arm/plat-omap/include/mach \
+		  arch/arm/include/asm \
+		  arch/arm/include/asm/mach \
+		  arch/arm/include/asm/hardware \
+		  include/trace \
+		  include/trace/events
+	do
+		install -d ${STAGING_KERNEL_DIR}/$ii
+		install -m 0644 ${S}/$ii/*.h ${STAGING_KERNEL_DIR}/$ii
+	done
+}
 
-
+addtask stage2 after do_stage before do_qa_staging
