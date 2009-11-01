@@ -2,7 +2,7 @@ Index: meta-texasinstruments/conf/machine/omap-3430sdp.conf
 ===================================================================
 --- meta-texasinstruments/conf/machine/omap-3430sdp.conf
 +++ meta-texasinstruments/conf/machine/omap-3430sdp.conf (working copy)
-@@ -7,2 +7,10 @@
+@@ -7,2 +7,10 @@ PREFERRED_PROVIDER_virtual/kernel = "linux-tiomap"
  PREFERRED_PROVIDER_virtual/kernel = "linux-tiomap"
 
 +PREFERRED_PROVIDER_virtual/xserver = "xserver-xf86-lite"

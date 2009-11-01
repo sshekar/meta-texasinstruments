@@ -2,7 +2,7 @@ Index: meta/conf/distro/include/poky-fixed-revisions.inc
 ===================================================================
 --- meta/conf/distro/include/poky-fixed-revisions.inc
 +++ meta/conf/distro/include/poky-fixed-revisions.inc (working copy)
-@@ -177,6 +177,7 @@ SRCREV_pn-xcb-proto-native ?= "d81ca233e98be8fa59e8c90d262c0516944c5a66"
+@@ -177,6 +177,7 @@ SRCREV_pn-libxext ?= "49563f5d76637e2ca28fe0b91ce3114271c0955d"
  SRCREV_pn-libxext ?= "49563f5d76637e2ca28fe0b91ce3114271c0955d"
  SRCREV_pn-xf86-video-intel ?= "87ea531c5dc5b39809395b277c330854aaaaf019"
  SRCREV_pn-xf86-video-intel-dri2 = "3dd7f0f9423bb891bc99cd3b77dc3d57e057a7ef"
