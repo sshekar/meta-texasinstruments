@@ -1,0 +1,12 @@
+Index: meta-texasinstruments/conf/distro/tilinux.conf
+===================================================================
+--- meta-texasinstruments/conf/distro/tilinux.conf
++++ meta-texasinstruments/conf/distro/tilinux.conf (working copy)
+@@ -86,4 +86,4 @@
+ PREFERRED_PROVIDER_virtual/db-native ?= "db-native"
+-PREFERRED_PROVIDER_virtual/xserver ?= "xserver-kdrive"
++PREFERRED_PROVIDER_virtual/xserver ?= "xserver-xorg"
+-PREFERRED_PROVIDER_virtual/xserver-xf86 ?= "xserver-xf86-dri-lite"
++PREFERRED_PROVIDER_virtual/xserver-xf86 ?= "xserver-xf86-lite"
+ PREFERRED_PROVIDER_virtual/libgl ?= "mesa-xlib"
+

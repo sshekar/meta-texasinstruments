@@ -1,0 +1,8 @@
+Index: meta-texasinstruments/packages/extra/xorg-driver-video.inc
+===================================================================
+--- meta-texasinstruments/packages/extra/xorg-driver-video.inc
++++ meta-texasinstruments/packages/extra/xorg-driver-video.inc (working copy)
+@@ -1,2 +1,2 @@
+ include xorg-driver-common.inc
+-DEPENDS = "randrproto renderproto videoproto xextproto fontsproto xserver-xorg xproto"
++DEPENDS = "randrproto renderproto videoproto xextproto fontsproto virtual/xserver xproto"
